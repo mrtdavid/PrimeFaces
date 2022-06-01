@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <h:form id="form1">
+            <p:outputPanel id="outputPanelAddUsuario">
+                <p:panelGrid columns="1">
+                    <p:outputLabel for="User" value="User" />
+                    <p:inputNumber id="User" value="#{usuarioHelper.usuario.User}" required="true" requiredMessage="Campo requerido"/>
+                    <p:message for="User" />
+                    <p:outputLabel for="Nombre" value="Nombre" />
+                    <p:inputText id="Nombre" value="#{usuarioHelper.usuario.Nombre}" required="true" requiredMessage="Campo requerido"/>
+                    <p:message for="Nombre" />
+                    <p:outputLabel for="Correo" value="Correo" />
+                    <p:inputText id="campo2" value="#{usuarioHelper.usuario.Correo}" required="true" requiredMessage="Campo requerido"/>
+                    <p:message for="Correo" />
+                    <p:outputLabel for="Password" value="Password" />
+                    <p:inputText id="Password" value="#{usuarioHelper.usuario.Password}" required="true" requiredMessage="Campo requerido"/>
+                    <p:message for="Password" />
+                    <p:commandButton  id="commandButtonAdd" action="#{usuarioHelper.addUsuario()}" value="Guardar" process="@form" update="form2:dataTableUsuario outputPanelAddUsuario" rendered="#{not usuarioHelper.edit}" />
+                    <p:commandButton  id="commandButtonUpdate" action="#{usuarioHelper.updateUsuario()}" value="Actualizar" process="@form" update="form2:dataTableUsuario outputPanelAddUsuario" rendered="#{usuarioHelper.edit}" />
+                </p:panelGrid>
+            </p:outputPanel>
+        </h:form>
+        <h:form id="form2">
+            <p:dataTable id="dataTableUsuario" var="usuario" value="#{usuarioHelper.usuarioList}" style="margin-bottom:40px">
+                <f:facet name="header">
+                    Uno
+                </f:facet>
+                <p:column headerText="User" >
+                    <h:outputText value="#{usuario.User}" />
+                </p:column>
+                <p:column headerText="Nombre" >
+                    <h:outputText value="#{usuario.Nombre}" />
+                </p:column>
+                <p:column headerText="Correo" >
+                    <h:outputText value="#{usuario.Correo}" />
+                </p:column>
+                <p:column headerText="Password" >
+                    <h:outputText value="#{usuario.Password}" />
+                </p:column>
+                <p:column headerText="Acciones" >
+                    <p:commandButton  id="editar" action="#{usuarioHelper.editUsuario( usuario.id )}" value="Editar" process="@this" update="form1:outputPanelAddUsuario"/>
+                    <p:commandButton  id="borrar" action="#{usuarioHelper.deleteUsuario( usuario.id )}" value="Borrar" process="@this" update="form2:dataTableUsuario"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </body>
+</html>

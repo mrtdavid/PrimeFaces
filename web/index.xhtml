@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form id="form1">
+            <p:outputPanel id="outputPanelAddDos">
+                <p:panelGrid columns="1">
+                    <p:outputLabel for="campo1" value="Campo 1" />
+                    <p:inputNumber id="campo1" value="#{dosHelper.dos.campo1}" required="true" requiredMessage="Campo requerido" validatorMessage="No es un número"/>
+                    <p:message for="campo1" />
+                    <p:outputLabel for="campo2" value="Campo 2" />
+                    <p:inputText id="campo2" value="#{dosHelper.dos.campo2}" required="true" requiredMessage="Campo requerido"/>
+                    <p:message for="campo2" />
+                    <p:commandButton  id="commandButtonAdd" action="#{dosHelper.addDos()}" value="Guardar" process="@form" update="form2:dataTableDos outputPanelAddDos" rendered="#{not dosHelper.edit}" />
+                    <p:commandButton  id="commandButtonUpdate" action="#{dosHelper.updateDos()}" value="Actualizar" process="@form" update="form2:dataTableDos outputPanelAddDos" rendered="#{dosHelper.edit}" />
+                </p:panelGrid>
+            </p:outputPanel>
+        </h:form>
+        <h:form id="form2">
+            <p:dataTable id="dataTableDos" var="dos" value="#{dosHelper.dosList}" style="margin-bottom:40px">
+                <f:facet name="header">
+                    Uno
+                </f:facet>
+                <p:column headerText="ID" >
+                    <h:outputText value="#{dos.id}" />
+                </p:column>
+                <p:column headerText="Campo1" >
+                    <h:outputText value="#{dos.campo1}" />
+                </p:column>
+                <p:column headerText="Campo 2" >
+                    <h:outputText value="#{dos.campo2}" />
+                </p:column>
+                <p:column headerText="Acciones" >
+                    <p:commandButton  id="editar" action="#{dosHelper.editDos( dos.id )}" value="Editar" process="@this" update="form1:outputPanelAddDos"/>
+                    <p:commandButton  id="borrar" action="#{dosHelper.deleteDos( dos.id )}" value="Borrar" process="@this" update="form2:dataTableDos"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <h:form id="form3">
+            <p:outputPanel id="outputPanelAddRol">
+                <p:panelGrid columns="1">
+                    <p:outputLabel for="rol" value="Rol" />
+                    <p:inputText id="rol" value="#{rolHelper.rol.rol}" required="true" requiredMessage="Campo requerido"/>
+                    <p:message for="rol" />
+                    <p:outputLabel for="descripcion" value="Descripcion" />
+                    <p:inputText id="descripcion" value="#{rolHelper.rol.descripcion}" required="true" requiredMessage="Campo requerido"/>
+                    <p:message for="descripcion" />
+                    <p:commandButton  id="commandButtonAdd" action="#{rolHelper.addRol()}" value="Guardar" process="@form" update="form4:dataTableRol outputPanelAddRol" rendered="#{not rolHelper.edit}" />
+                    <p:commandButton  id="commandButtonUpdate" action="#{rolHelper.update()}" value="Actualizar" process="@form" update="form4:dataTableRol outputPanelAddRol" rendered="#{rolHelper.edit}" />
+                </p:panelGrid>
+            </p:outputPanel>
+        </h:form>
+        <h:form id="form4">
+            <p:dataTable id="dataTableRol" var="rol" value="#{rolHelper.rolList}" style="margin-bottom:40px">
+                <f:facet name="header">
+                    Rol
+                </f:facet>
+                <p:column headerText="Rol" >
+                    <h:outputText value="#{rol.rol}" />
+                </p:column>
+                <p:column headerText="Descripcion" >
+                    <h:outputText value="#{rol.descripcion}" />
+                </p:column>
+                <p:column headerText="Acciones" >
+                    <p:commandButton  id="editar" action="#{rolHelper.editRol( rol.rol )}" value="Editar" process="@this" update="form3:outputPanelAddRol"/>
+                    <p:commandButton  id="borrar" action="#{rolHelper.deleteRol( rol.rol )}" value="Borrar" process="@this" update="form4:dataTableRol"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <h:form id="form5">
+            <p:outputPanel id="outputPanelAddUsuario">
+                <p:panelGrid columns="1">
+                    <p:outputLabel for="User" value="User" />
+                    <p:inputText id="User" value="#{usuarioHelper.usuario.user}" required="true" requiredMessage="Campo requerido"/>
+                    <p:message for="User" />
+                    <p:outputLabel for="Nombre" value="Nombre" />
+                    <p:inputText id="Nombre" value="#{usuarioHelper.usuario.nombre}" required="true" requiredMessage="Campo requerido"/>
+                    <p:message for="Nombre" />
+                    <p:outputLabel for="Correo" value="Correo" />
+                    <p:inputText id="Correo" value="#{usuarioHelper.usuario.correo}" required="true" requiredMessage="Campo requerido"/>
+                    <p:message for="Correo" />
+                    <p:outputLabel for="Password" value="Password" />
+                    <p:inputText id="Password" value="#{usuarioHelper.usuario.password}" required="true" requiredMessage="Campo requerido"/>
+                    <p:message for="Password" />
+                    <p:commandButton  id="commandButtonAdd" action="#{usuarioHelper.addUsuario()}" value="Guardar" process="@form" update="form6:dataTableUsuario outputPanelAddUsuario" rendered="#{not usuarioHelper.edit}" />
+                    <p:commandButton  id="commandButtonUpdate" action="#{usuarioHelper.updateUsuario()}" value="Actualizar" process="@form" update="form6:dataTableUsuario outputPanelAddUsuario" rendered="#{usuarioHelper.edit}" />
+                </p:panelGrid>
+            </p:outputPanel>
+        </h:form>
+        <h:form id="form6">
+            <p:dataTable id="dataTableUsuario" var="usuario" value="#{usuarioHelper.usuarioList}" style="margin-bottom:40px">
+                <f:facet name="header">
+                    Usuario
+                </f:facet>
+                <p:column headerText="User" >
+                    <h:outputText value="#{usuario.user}" />
+                </p:column>
+                <p:column headerText="Nombre" >
+                    <h:outputText value="#{usuario.nombre}" />
+                </p:column>
+                <p:column headerText="Correo" >
+                    <h:outputText value="#{usuario.correo}" />
+                </p:column>
+                <p:column headerText="Password" >
+                    <h:outputText value="#{usuario.password}" />
+                </p:column>
+                <p:column headerText="Acciones" >
+                    <p:commandButton  id="editar" action="#{usuarioHelper.editUsuario( usuario.id )}" value="Editar" process="@this" update="form5:outputPanelAddUsuario"/>
+                    <p:commandButton  id="borrar" action="#{usuarioHelper.deleteUsuario( usuario.id )}" value="Borrar" process="@this" update="form6:dataTableUsuario"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+
+
+
+
